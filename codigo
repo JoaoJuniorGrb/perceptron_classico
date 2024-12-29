@@ -1,0 +1,34 @@
+# Dados de entrada
+x = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+y = np.array([[0], [0], [0], [1]])
+
+# Inicialização de pesos e bias
+weights = np.random.rand(2, 1)
+bias = np.random.rand(1)
+learning_rate = 0.1
+
+# Função de ativação step
+def step_activation(x):
+    return np.where(x > 0, 1, 0)
+
+# Treinamento manual
+epochs = 100
+for epoch in range(epochs):
+    for i in range(len(x)):
+        # Forward pass
+        z = np.dot(x[i], weights) + bias
+        y_pred = step_activation(z)
+
+        # Erro
+        error = y[i] - y_pred
+
+        # Atualização dos pesos e bias
+        weights += learning_rate * error * x[i].reshape(-1, 1)
+        bias += learning_rate * error
+
+# Teste
+print("\nPredições (Treinamento Manual):")
+for i in range(len(x)):
+    z = np.dot(x[i], weights) + bias
+    y_pred = step_activation(z)
+    print(f"Entrada: {x[i]} -> Saída prevista: {y_pred[0]}, Saída esperada: {y[i][0]}")
